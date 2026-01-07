@@ -68,7 +68,7 @@
   }
   .story-list {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     margin: 1rem;
   }
   .story-list-item img {
