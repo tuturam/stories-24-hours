@@ -3,16 +3,13 @@
   import StoryForm from './StoryForm.vue';
   import { onMounted, ref } from 'vue';
   import Dialog from './Dialog.vue';
+  import { useDialog } from '@/stores/useDialog';
 
   const stories = useStories();
+  const dialog = useDialog();
   onMounted(() => {
     stories.getStories()
   });
-  const openDialog = ref(false);
-
-  const showCreateDialog = () => {
-    openDialog.value = true;
-  };
 </script>
 
 <template>
@@ -21,7 +18,7 @@
       <h1>Stories 24 Hours</h1>
     </div>
     <div class="story-list">
-      <div class="create-story story-list-item" @click="showCreateDialog">
+      <div class="create-story story-list-item" @click="dialog.openDialog">
         +
       </div>
       <div
@@ -34,9 +31,9 @@
     </div>
   </div>
   <Dialog
-    :show="openDialog"
+    :show="dialog.isOpen"
     title="Add story"
-    :onClose="() => openDialog = false"
+    :onClose="dialog.closeDialog"
   >
   <StoryForm />
   </Dialog>

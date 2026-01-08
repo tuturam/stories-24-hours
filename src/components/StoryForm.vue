@@ -1,8 +1,10 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useStories } from '@/stores/useStories';
+  import { useDialog } from '@/stores/useDialog';
 
   const stories = useStories();
+  const dialog = useDialog();
   const imageFile = ref<File | null>(null);
   const imagePreview = ref<string | undefined>(undefined);
   const refFileInput = ref<HTMLInputElement | null>(null);
@@ -44,6 +46,7 @@
         const base64Image = reader.result as string;
         stories.addStory(base64Image);
         imageFile.value = null;
+        dialog.closeDialog();
       };
       reader.readAsDataURL(imageFile.value);
     }
