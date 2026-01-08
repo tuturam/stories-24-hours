@@ -4,12 +4,18 @@
   import { onMounted, ref } from 'vue';
   import Dialog from './Dialog.vue';
   import { useDialog } from '@/stores/useDialog';
+  import StoryViewer from './StoryViewer.vue';
 
   const stories = useStories();
   const dialog = useDialog();
   onMounted(() => {
     stories.getStories()
   });
+  const isViewerOpen = ref(false);
+
+  const openStoryViewer = () => {
+    isViewerOpen.value = true;
+  };
 </script>
 
 <template>
@@ -25,6 +31,7 @@
         v-for="story in stories.story"
         :key="story.id"
         class="story-list-item stories"
+        @click="openStoryViewer"
       >
         <img :src="story.base64Image" alt="">
       </div>
@@ -37,6 +44,7 @@
   >
   <StoryForm />
   </Dialog>
+  <StoryViewer :open="isViewerOpen" />
 </template>
 
 <style>

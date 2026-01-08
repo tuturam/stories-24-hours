@@ -35,10 +35,11 @@ export const useStories = defineStore("stories", () => {
   const getStories = () => {
     // get from localStorage
     try {
-      const storedStories = localStorage.getItem('stories');
-      if (storedStories) {
-        story.value = JSON.parse(storedStories);
-      }
+      // const storedStories = localStorage.getItem('stories');
+      // if (storedStories) {
+      //   story.value = JSON.parse(storedStories);
+      // }
+      throw new Error('Error retrieving stories from localStorage');
     } catch (error) {
       console.error('Error retrieving stories from localStorage:', error);
     }
