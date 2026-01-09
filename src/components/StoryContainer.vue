@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import { useStories } from '@/stores/useStories';
   import StoryForm from './StoryForm.vue';
   import { onMounted, ref } from 'vue';
@@ -12,9 +12,11 @@
     stories.getStories()
   });
   const isViewerOpen = ref(false);
+  const currentIndex = ref(0);
 
-  const openStoryViewer = () => {
+  const openStoryViewer = (index: number) => {
     isViewerOpen.value = true;
+    currentIndex.value = index;
   };
 </script>
 
@@ -28,10 +30,10 @@
         +
       </div>
       <div
-        v-for="story in stories.story"
+        v-for="(story, idx) in stories.story"
         :key="story.id"
         class="story-list-item stories"
-        @click="openStoryViewer"
+        @click="openStoryViewer(idx)"
       >
         <img :src="story.base64Image" alt="">
       </div>
@@ -44,7 +46,7 @@
   >
   <StoryForm />
   </Dialog>
-  <StoryViewer :open="isViewerOpen" />
+  <StoryViewer v-if="isViewerOpen" :open="isViewerOpen" @close="isViewerOpen = false" :stories="stories.story" :currentIndexProp="currentIndex" />
 </template>
 
 <style>
