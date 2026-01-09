@@ -1,10 +1,24 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+
   interface DialogProps {
     show: boolean;
     title?: string;
     onClose?: () => void;
   }
   const props = defineProps<DialogProps>()
+  onMounted(() => {
+    // handle close esc key
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && props.show) {
+        props.onClose && props.onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  })
 </script>
 
 <template>

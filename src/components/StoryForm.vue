@@ -87,7 +87,6 @@
     padding: 1rem;
     text-align: center;
     margin-bottom: 1rem;
-    cursor: pointer;
   }
   .drag-drop-container.dragging {
     border-color: #000;
@@ -95,6 +94,5 @@
   .drag-drop-container.dropped-image {
     padding: 0;
     border: none;
-    cursor: default;
   }
 </style>
