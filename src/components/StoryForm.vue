@@ -77,7 +77,7 @@
       accept="image/*"
       style="display: none;"
     />
-    <button @click="submitStory">Submit Story</button>
+    <button class="submit-btn" @click="submitStory">Submit Story</button>
   </div>
 </template>
 
@@ -94,5 +94,17 @@
   .drag-drop-container.dropped-image {
     padding: 0;
     border: none;
+  }
+  .submit-btn {
+    padding: 0.5rem 1rem;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .submit-btn:hover {
+    background-color: #333;
   }
 </style>
