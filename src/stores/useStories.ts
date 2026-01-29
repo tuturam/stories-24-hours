@@ -45,8 +45,9 @@ export const useStories = defineStore("stories", () => {
   }
   const removeExpiredStories = () => {
     const now = Date.now();
+    if (story.value.length === 0) return;
     story.value = story.value.filter(
-      (s) => now < new Date(s.expiredAt).getTime()
+      (s) => new Date(s.expiredAt).getTime() > now
     );
     saveStoriesToLocalStorage();
   }
