@@ -37,17 +37,19 @@ export const useStories = defineStore("stories", () => {
     try {
       const storedStories = localStorage.getItem('stories');
       if (storedStories) {
+        // masukkan stories sebelum di filter expired
         story.value = JSON.parse(storedStories);
+        removeExpiredStories()
       }
     } catch (error) {
       console.error('Error retrieving stories from localStorage:', error);
     }
   }
   const removeExpiredStories = () => {
-    const now = Date.now();
     if (story.value.length === 0) return;
+    const now = Date.now();
     story.value = story.value.filter(
-      (s) => new Date(s.expiredAt).getTime() > now
+      (s) => now < new Date(s.expiredAt).getTime()
     );
     saveStoriesToLocalStorage();
   }

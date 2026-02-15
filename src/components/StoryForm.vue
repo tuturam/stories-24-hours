@@ -51,6 +51,11 @@
       reader.readAsDataURL(imageFile.value);
     }
   };
+
+  const handleDeleteImage = () => {
+    imageFile.value = null;
+    imagePreview.value = undefined;
+  };
 </script>
 <template>
   <div class="story-form">
@@ -62,8 +67,9 @@
       @dragleave.prevent="onDragLeave"
       :class="{ dragging: isDragging, 'dropped-image': imagePreview }"
     >
-      <div v-if="imageFile">
+      <div v-if="imageFile" class="container-image-preview">
         <img :src="imagePreview" :alt="imageFile?.name" style="width: 100%; height: 100%;">
+        <button @click="handleDeleteImage">x</button>
       </div>
       <div v-else>
         Drag and drop an image here
@@ -77,7 +83,7 @@
       accept="image/*"
       style="display: none;"
     />
-    <button class="submit-btn" @click="submitStory">Submit Story</button>
+    <button class="submit-btn" @click="submitStory" :disabled="!imagePreview">Submit Story</button>
   </div>
 </template>
 
@@ -106,5 +112,23 @@
   }
   .submit-btn:hover {
     background-color: #333;
+  }
+  .submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .container-image-preview {
+    position: relative;
+  }
+  .container-image-preview button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.3rem 0.6rem;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
   }
 </style>

@@ -9,8 +9,6 @@
   const stories = useStories();
   const dialog = useDialog();
   onMounted(() => {
-    // check and remove expired stories on mount
-    stories.removeExpiredStories();
     stories.getStories()
   });
   const isViewerOpen = ref(false);
