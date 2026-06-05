@@ -80,7 +80,6 @@
       <div v-if="imageFile" class="container-image-preview">
         <img :src="imagePreview" :alt="imageFile?.name" style="width: 100%; height: 100%;">
         <button @click="handleDeleteImage">&#10006;</button>
-        <button @click="handleDeleteImage">x</button>
       </div>
       <div v-else>
         Drag and drop an image here
