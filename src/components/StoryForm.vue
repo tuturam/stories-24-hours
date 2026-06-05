@@ -61,6 +61,11 @@
       });
     }
   };
+
+  const handleDeleteImage = () => {
+    imageFile.value = null;
+    imagePreview.value = undefined;
+  };
 </script>
 <template>
   <div class="story-form">
@@ -72,8 +77,9 @@
       @dragleave.prevent="onDragLeave"
       :class="{ dragging: isDragging, 'dropped-image': imagePreview }"
     >
-      <div v-if="imageFile">
+      <div v-if="imageFile" class="container-image-preview">
         <img :src="imagePreview" :alt="imageFile?.name" style="width: 100%; height: 100%;">
+        <button @click="handleDeleteImage">&#10006;</button>
       </div>
       <div v-else>
         Drag and drop an image here
@@ -87,7 +93,7 @@
       accept="image/*"
       style="display: none;"
     />
-    <button @click="submitStory" class="btn" :disabled="!imageFile">Submit Story</button>
+    <button class="submit-btn" @click="submitStory" :disabled="!imagePreview">Submit Story</button>
   </div>
 </template>
 
@@ -105,17 +111,35 @@
     padding: 0;
     border: none;
   }
-  .btn {
-    background-color: #000;
+  .submit-btn {
+    padding: 0.5rem 1rem;
+    background-color: black;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    border-radius: 4px;
     cursor: pointer;
     width: 100%;
-    border-radius: 5px;
   }
-  .btn:disabled {
+  .submit-btn:hover {
+    background-color: #333;
+  }
+  .submit-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+  .container-image-preview {
+    position: relative;
+  }
+  .container-image-preview button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.75rem 0.5rem;
+    background-color: rgba(255, 99, 71, 0.75);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 0;
   }
 </style>
