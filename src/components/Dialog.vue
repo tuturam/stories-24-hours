@@ -11,7 +11,7 @@ import { onMounted } from 'vue';
     // handle close esc key
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && props.show) {
-        props.onClose && props.onClose();
+        props.onClose?.();
       }
     };
     window.addEventListener('keydown', handleEsc);
