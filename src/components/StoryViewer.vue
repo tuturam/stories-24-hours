@@ -1,14 +1,6 @@
 <script setup lang="ts">
   import { useStories } from '@/stores/useStories';
-  import { computed, onMounted, onUnmounted, ref } from 'vue';
-
-  const stories = useStories()
-  const computedStories = computed(() => stories.story);
-  const currentIndex = ref(0)
-  const progress = ref(0);
-  const isPaused = ref(false);
-  const STORY_DURATION = 3000; // 3 seconds per story
-  let intervalId: number | null = null;
+  import { computed, onMounted, onUnmounted, ref} from 'vue';
   const props = defineProps<{
     open: boolean;
     currentIndexProp: number;
@@ -17,15 +9,23 @@
     (e: 'close'): void;
   }>();
 
+  const stories = useStories()
+  const computedStories = computed(() => stories.story);
+  const currentIndex = ref(props.currentIndexProp)
+  const progress = ref(0);
+  const isPaused = ref(false);
+  const STORY_DURATION = 3000; // 3 seconds per story
+  let intervalId: number | null = null;
+
   const startTimer = () => {
     if (intervalId) clearInterval(intervalId); // Hapus timer lama
-    
+
     const increment = 100 / (STORY_DURATION / 100); // = 100 / 50 = 2
-    
+
     intervalId = setInterval(() => {
       if (!isPaused.value) {
         progress.value += increment; // +2% setiap 100ms
-        
+
         if (progress.value >= 100) {
           nextStory(); // Pindah story berikutnya
         }
@@ -93,22 +93,22 @@
 <template>
   <div class="story-viewer" v-if="open" @click.self="handlePrevAndNextScreen" @mousedown="pauseStory" @mouseup="resumeStory" @mouseleave="resumeStory">
     <!-- close buttton -->
-    <button 
+    <button
       class="close-button"
       @click="$emit('close')"
     >×</button>
     <!-- Progress bars untuk semua story (di atas) -->
     <div class="progress-bars-container">
-      <div 
-        v-for="(story, index) in computedStories" 
+      <div
+        v-for="(story, index) in computedStories"
         :key="story.id"
         class="progress-bar"
       >
-        <div 
+        <div
           class="progress-fill"
-          :style="{ 
-            width: index === currentIndex ? progress + '%' 
-                 : (index < currentIndex ? '100%' : '0%') 
+          :style="{
+            width: index === currentIndex ? progress + '%'
+                 : (index < currentIndex ? '100%' : '0%')
           }"
         ></div>
       </div>
@@ -116,14 +116,14 @@
 
     <!-- Carousel container dengan transform translateX -->
     <div class="carousel-container">
-      <div 
+      <div
         class="carousel-track"
-        :style="{ 
+        :style="{
           transform: `translateX(calc(-${currentIndex * 100}% - ${currentIndex * 16}px))`
         }"
       >
-        <div 
-          v-for="story in computedStories" 
+        <div
+          v-for="story in computedStories"
           :key="story.id"
           class="carousel-slide"
         >
