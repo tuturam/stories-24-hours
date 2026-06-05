@@ -53,6 +53,8 @@
         if (!imageFile.value) return
         // Do something with the created image bitmap
         const c = document.createElement('canvas');
+        c.width = bitmap.width;
+        c.height = bitmap.height;
         c.getContext('2d')!.drawImage(bitmap, 0, 0);
         const image = c.toDataURL('image/webp', 0.7)
         stories.addStory(image);
