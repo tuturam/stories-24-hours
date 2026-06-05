@@ -31,33 +31,43 @@
     refFileInput.value?.click();
   };
 
-  const onDragOver = (event: DragEvent) => {
+  const onDragOver = () => {
     isDragging.value = true;
   };
 
-  const onDragLeave = (event: DragEvent) => {
+  const onDragLeave = () => {
     isDragging.value = false;
   };
 
   const submitStory = () => {
     if (imageFile.value) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64Image = reader.result as string;
-        stories.addStory(base64Image);
+      // const reader = new FileReader();
+      // reader.onload = () => {
+      //   const base64Image = reader.result as string;
+      //   stories.addStory(base64Image);
+      //   imageFile.value = null;
+      //   dialog.closeDialog();
+      // };
+      // reader.readAsDataURL(imageFile.value);
+      createImageBitmap(imageFile.value).then((bitmap) => {
+        if (!imageFile.value) return
+        // Do something with the created image bitmap
+        const c = document.createElement('canvas');
+        c.getContext('2d')!.drawImage(bitmap, 0, 0);
+        const image = c.toDataURL('image/webp', 0.7)
+        stories.addStory(image);
         imageFile.value = null;
         dialog.closeDialog();
-      };
-      reader.readAsDataURL(imageFile.value);
+      });
     }
   };
 </script>
 <template>
   <div class="story-form">
     <!-- container drag n drop -->
-     <div 
+     <div
       class="drag-drop-container"
-      @dragover.prevent="onDragOver" 
+      @dragover.prevent="onDragOver"
       @drop.prevent="handleDragDrop"
       @dragleave.prevent="onDragLeave"
       :class="{ dragging: isDragging, 'dropped-image': imagePreview }"
@@ -77,7 +87,7 @@
       accept="image/*"
       style="display: none;"
     />
-    <button @click="submitStory">Submit Story</button>
+    <button @click="submitStory" class="btn" :disabled="!imageFile">Submit Story</button>
   </div>
 </template>
 
@@ -94,5 +104,18 @@
   .drag-drop-container.dropped-image {
     padding: 0;
     border: none;
+  }
+  .btn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+  }
+  .btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
 </style>

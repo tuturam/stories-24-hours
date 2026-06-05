@@ -12,7 +12,7 @@ const EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export const useStories = defineStore("stories", () => {
   const story = ref<Story[]>([])
-  
+
   const addStory = (base64Image: string) => {
     const now = Date.now();
     const id = crypto.randomUUID();
@@ -42,6 +42,8 @@ export const useStories = defineStore("stories", () => {
     } catch (error) {
       console.error('Error retrieving stories from localStorage:', error);
     }
+    // butuh hasil ambil dari localStorage untuk memastikan data terbaru, lalu filter yang sudah expired
+    removeExpiredStories();
   }
   const removeExpiredStories = () => {
     const now = Date.now();

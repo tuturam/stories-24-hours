@@ -65,6 +65,7 @@
     cursor: pointer;
     font-weight: bold;
     overflow: hidden;
+    line-height: 0;
   }
   .create-story.story-list-item {
     border: 3px solid #ccc;
