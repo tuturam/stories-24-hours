@@ -180,7 +180,8 @@
   .carousel-container {
     position: relative;
     width: 90%;
-    max-width: 500px;
+    max-width: 1080px;
+    max-height: 1920px;
     height: 80vh;
     overflow: hidden;
     border-radius: 25px;
@@ -204,7 +205,7 @@
   .story-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 25px;
     user-select: none;
   }
